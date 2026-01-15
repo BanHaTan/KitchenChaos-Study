@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float rotateSpeed = 10f;
     private void Update()
     {
         Vector2 inputVector = new Vector2(0, 0);
@@ -28,8 +29,10 @@ public class Player : MonoBehaviour
         inputVector = inputVector.normalized;
 
         Vector3 moveDirection = new Vector3(inputVector.x, 0f, inputVector.y);
-        transform.position += moveDirection * moveSpeed * Time.deltaTime; 
-        Debug.Log(Time.deltaTime);
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+
+        transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
+       
 
     }
 }
